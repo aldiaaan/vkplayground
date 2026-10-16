@@ -28,6 +28,6 @@ def run(
     ]
 
     if include_tests:
-        command.append("-DPLANK_BUILD_UNIT_TESTS=ON")
+        command.append("-DVK_PLAYGROUND_BUILD_UNIT_TESTS=ON")
 
     run_command(command)

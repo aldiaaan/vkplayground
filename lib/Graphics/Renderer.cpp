@@ -1,6 +1,6 @@
 
-#include "plank/graphics/Renderer.hpp"
+#include "vkplayground/graphics/Renderer.hpp"
 
-namespace plank {
+namespace vkplayground {
 namespace graphics {} // namespace graphics
-} // namespace plank
+} // namespace vkplayground

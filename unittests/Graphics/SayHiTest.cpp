@@ -1,4 +1,4 @@
-#include "plank/graphics/renderer.hpp"
+#include "vkplayground/graphics/renderer.hpp"
 
 #include <gtest/gtest.h>
 

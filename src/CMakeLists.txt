@@ -4,5 +4,5 @@ add_executable(application
 
 target_link_libraries(application
     PRIVATE
-        plank
+        vkplayground
 )

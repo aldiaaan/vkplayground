@@ -1,9 +1,9 @@
-#ifndef PLANK_MATH_VECTOR_HPP
-#define PLANK_MATH_VECTOR_HPP
+#ifndef VK_PLAYGROUND_MATH_VECTOR_HPP
+#define VK_PLAYGROUND_MATH_VECTOR_HPP
 
 #include <cmath>
 
-namespace plank {
+namespace vkplayground {
 namespace math {
 
 class Vector3 {
@@ -45,6 +45,6 @@ class Vector3 {
 };
 
 } // namespace math
-} // namespace plank
+} // namespace vkplayground
 
 #endif

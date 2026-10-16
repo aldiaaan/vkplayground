@@ -1,5 +1,5 @@
 [project]
-name = "plank"
+name = "vkplayground"
 version = "0.1.0"
 description = "Boilerplate for making CXX application"
 requires-python = ">=3.13"
