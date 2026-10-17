@@ -1,6 +1,12 @@
-#include "vkplayground/graphics/Renderer.hpp"
-#include "vkplayground/math/Vector3.hpp"
+#include "vkplayground/Window/WindowManager.hpp"
 
 #include <iostream>
 
-int main() { return 0; }
+int main() {
+    vkplayground::window::WindowManager window_manager;
+
+    window_manager.initialize();
+
+    std::cin.get();
+    return 0;
+}
