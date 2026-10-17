@@ -7,6 +7,7 @@ Prerequisites:
 - Python 3.11+ (https://www.python.org/)
 - uv (https://docs.astral.sh/uv/)
 - CMake 3.21+ (https://cmake.org/)
+- clang (https://clang.llvm.org/)
 
 Hardware Requirements:
 - Vulkan 1.4 compatible device
