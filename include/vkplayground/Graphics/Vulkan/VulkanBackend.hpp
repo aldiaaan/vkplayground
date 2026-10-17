@@ -26,9 +26,12 @@ class VulkanBackend {
     }
 
     std::expected<void, error::ErrorCodes> createVulkanInstance();
+    std::expected<std::vector<const char*>, error::ErrorCodes>
+    querySupportedValidationLayers();
 
   private:
     vk::Instance VulkanInstance = nullptr;
+    std::vector<std::string> ValidationLayers;
 };
 } // namespace graphics
 } // namespace vkplayground

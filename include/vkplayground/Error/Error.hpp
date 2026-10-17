@@ -11,7 +11,8 @@ enum class ErrorCodes : uint8_t {
     FAILED_TO_CREATE_WINDOW,
     FAIELED_TO_INITIALIZE_SDL,
 
-    FAILED_TO_CREATE_VULKAN_INSTANCE
+    FAILED_TO_CREATE_VULKAN_INSTANCE,
+    FAILED_TO_QUERY_VALIDATION_LAYERS,
 };
 
 [[nodiscard]] constexpr auto fail(ErrorCodes c) noexcept {
