@@ -3,6 +3,7 @@
 #include "SDL3/SDL_init.h"
 #include "vkplayground/Error/Error.hpp"
 #include "vkplayground/Graphics/Vulkan/VulkanRenderer.hpp"
+#include "vkplayground/Log/Log.hpp"
 #include "vkplayground/Window/WindowManager.hpp"
 
 #include <expected>
@@ -32,10 +33,14 @@ std::expected<void, error::ErrorCodes> Engine::initialize() {
                                                .Height = Options.windowHeight});
 
     if (!initializeWindowResult) {
-        return initializeWindowResult;
+        return error::fail(initializeWindowResult.error());
     }
 
     auto initializeRendererResult = Renderer->initialize();
+
+    if (!initializeRendererResult) {
+        return error::fail(initializeRendererResult.error());
+    }
 
     return {};
 }

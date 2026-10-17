@@ -29,6 +29,8 @@ enum class ErrorCodes : uint8_t {
         return "Failed to initialize SDL";
     case FAILED_TO_CREATE_VULKAN_INSTANCE:
         return "Failed to create Vulkan instance";
+    case FAILED_TO_QUERY_VALIDATION_LAYERS:
+        return "Failed to query validation layers";
     };
 
     return "Unknown error code";

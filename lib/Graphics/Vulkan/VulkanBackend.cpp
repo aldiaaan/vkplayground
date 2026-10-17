@@ -4,6 +4,7 @@
 #include "SDL3/SDL_stdinc.h"
 #include "SDL3/SDL_vulkan.h"
 #include "vkplayground/Error/Error.hpp"
+#include "vkplayground/Log/Log.hpp"
 #include "vulkan/vulkan.hpp"
 
 #include <cstdint>
@@ -40,12 +41,13 @@ VulkanBackend::querySupportedValidationLayers() {
 
     std::vector<const char*> SupportedLayers;
 
-    for (std::string Layer : ValidationLayers) {
+    for (const auto& Layer : ValidationLayers) {
         for (const auto& AvailableLayer : AvailableLayers) {
             if (strcmp(AvailableLayer.layerName, Layer.c_str()) == 0) {
                 // SDL_Log("Found supported validation layer %s",
                 // Layer.c_str());
                 SupportedLayers.push_back(Layer.c_str());
+                break;
             }
         }
     }
@@ -90,8 +92,10 @@ std::expected<void, error::ErrorCodes> VulkanBackend::createVulkanInstance() {
             QuerySupportedValidationLayersResult->data();
     }
 
-    if (vk::createInstance(&CreateInfo, nullptr, &VulkanInstance) !=
-        vk::Result::eSuccess) {
+    auto CreateInstanceResult =
+        vk::createInstance(&CreateInfo, nullptr, &VulkanInstance);
+
+    if (CreateInstanceResult != vk::Result::eSuccess) {
         return error::fail(error::ErrorCodes::FAILED_TO_CREATE_VULKAN_INSTANCE);
     }
 
