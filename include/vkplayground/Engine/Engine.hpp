@@ -13,22 +13,22 @@ namespace vkplayground {
 namespace engine {
 
 struct EngineOptions {
-    std::string WindowTitle = "";
-    int WindowWidth = 1366;
-    int windowHeight = 768;
+  std::string WindowTitle = "";
+  int WindowWidth = 1366;
+  int windowHeight = 768;
 };
 
 class Engine {
-  public:
-    Engine(EngineOptions Options);
+public:
+  Engine(EngineOptions Options);
 
-    std::expected<void, error::ErrorCodes> initialize();
-    ~Engine() noexcept;
+  std::expected<void, error::ErrorCodes> initialize();
+  ~Engine() noexcept;
 
-  private:
-    EngineOptions Options;
-    window::WindowManager WindowManager;
-    std::unique_ptr<graphics::Renderer> Renderer;
+private:
+  EngineOptions Options;
+  window::WindowManager WindowManager;
+  std::unique_ptr<graphics::Renderer> Renderer;
 };
 } // namespace engine
 } // namespace vkplayground

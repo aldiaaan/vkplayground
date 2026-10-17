@@ -12,26 +12,25 @@ namespace vkplayground {
 namespace window {
 
 struct WindowManagerInitializeOptions {
-    std::string* Title;
-    int Width;
-    int Height;
+  std::string* Title;
+  int Width;
+  int Height;
 };
 
 class WindowManager {
-  public:
-    WindowManager() = default;
+public:
+  WindowManager() = default;
 
-    ~WindowManager() noexcept;
-    WindowManager(const WindowManager&) = delete;
-    WindowManager& operator=(const WindowManager&) = delete;
-    WindowManager(WindowManager&& Other) noexcept;
-    WindowManager& operator=(WindowManager&& Other) noexcept;
+  ~WindowManager() noexcept;
+  WindowManager(const WindowManager&) = delete;
+  WindowManager& operator=(const WindowManager&) = delete;
+  WindowManager(WindowManager&& Other) noexcept;
+  WindowManager& operator=(WindowManager&& Other) noexcept;
 
-    std::expected<void, error::ErrorCodes>
-    initialize(WindowManagerInitializeOptions Options);
+  std::expected<void, error::ErrorCodes> initialize(WindowManagerInitializeOptions Options);
 
-  private:
-    SDL_Window* Window = nullptr;
+private:
+  SDL_Window* Window = nullptr;
 };
 } // namespace window
 } // namespace vkplayground

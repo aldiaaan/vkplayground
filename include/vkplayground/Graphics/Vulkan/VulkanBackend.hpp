@@ -10,28 +10,27 @@ namespace vkplayground {
 namespace graphics {
 
 class VulkanBackend {
-  public:
-    VulkanBackend();
+public:
+  VulkanBackend();
 
-    ~VulkanBackend() = default;
+  ~VulkanBackend() = default;
 
-    VulkanBackend(const VulkanBackend&) = delete;
-    VulkanBackend& operator=(const VulkanBackend&) = delete;
+  VulkanBackend(const VulkanBackend&) = delete;
+  VulkanBackend& operator=(const VulkanBackend&) = delete;
 
-    VulkanBackend(VulkanBackend&& other) noexcept {}
-    VulkanBackend& operator=(VulkanBackend&& other) noexcept {
-        if (this != &other) {
-        }
-        return *this;
+  VulkanBackend(VulkanBackend&& other) noexcept {}
+  VulkanBackend& operator=(VulkanBackend&& other) noexcept {
+    if (this != &other) {
     }
+    return *this;
+  }
 
-    std::expected<void, error::ErrorCodes> createVulkanInstance();
-    std::expected<std::vector<const char*>, error::ErrorCodes>
-    querySupportedValidationLayers();
+  std::expected<void, error::ErrorCodes> createVulkanInstance();
+  std::expected<std::vector<const char*>, error::ErrorCodes> querySupportedValidationLayers();
 
-  private:
-    vk::Instance VulkanInstance = nullptr;
-    std::vector<std::string> ValidationLayers;
+private:
+  vk::Instance VulkanInstance = nullptr;
+  std::vector<std::string> ValidationLayers;
 };
 } // namespace graphics
 } // namespace vkplayground

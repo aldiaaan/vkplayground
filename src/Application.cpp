@@ -10,39 +10,35 @@
 
 SDL_AppResult SDL_AppInit(void** AppState, int Argc, char* Argv[]) {
 
-    auto* Engine = new vkplayground::engine::Engine(
-        vkplayground::engine::EngineOptions{.WindowTitle = "Learn Vulkan!",
-                                            .WindowWidth = 1366,
-                                            .windowHeight = 768});
+  auto* Engine = new vkplayground::engine::Engine(
+      vkplayground::engine::EngineOptions{.WindowTitle = "Learn Vulkan!", .WindowWidth = 1366, .windowHeight = 768});
 
-    auto EngineInitializationResult = Engine->initialize();
+  auto EngineInitializationResult = Engine->initialize();
 
-    if (!EngineInitializationResult) {
-        SDL_Log("%s", std::string(vkplayground::error::toString(
-                                      EngineInitializationResult.error()))
-                          .c_str());
-        return SDL_APP_FAILURE;
-    }
+  if (!EngineInitializationResult) {
+    SDL_Log("%s", std::string(vkplayground::error::toString(EngineInitializationResult.error())).c_str());
+    return SDL_APP_FAILURE;
+  }
 
-    *AppState = Engine;
+  *AppState = Engine;
 
-    return SDL_APP_CONTINUE;
+  return SDL_APP_CONTINUE;
 }
 
 SDL_AppResult SDL_AppEvent(void* AppState, SDL_Event* Event) {
-    if (Event->type == SDL_EVENT_QUIT) {
-        return SDL_APP_SUCCESS;
-    }
-    return SDL_APP_CONTINUE;
+  if (Event->type == SDL_EVENT_QUIT) {
+    return SDL_APP_SUCCESS;
+  }
+  return SDL_APP_CONTINUE;
 }
 
 SDL_AppResult SDL_AppIterate(void* AppState) { return SDL_APP_CONTINUE; }
 
 void SDL_AppQuit(void* AppState, SDL_AppResult Result) {
 
-    if (AppState) {
-        delete static_cast<vkplayground::engine::Engine*>(AppState);
-    }
+  if (AppState) {
+    delete static_cast<vkplayground::engine::Engine*>(AppState);
+  }
 
-    SDL_Quit();
+  SDL_Quit();
 }

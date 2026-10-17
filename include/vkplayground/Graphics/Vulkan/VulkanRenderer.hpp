@@ -7,14 +7,14 @@
 namespace vkplayground {
 namespace graphics {
 class VulkanRenderer : public Renderer {
-  public:
-    VulkanRenderer();
-    ~VulkanRenderer();
+public:
+  VulkanRenderer();
+  ~VulkanRenderer();
 
-    std::expected<void, error::ErrorCodes> initialize() override;
+  std::expected<void, error::ErrorCodes> initialize() override;
 
-  private:
-    VulkanBackend Backend;
+private:
+  VulkanBackend Backend;
 };
 } // namespace graphics
 } // namespace vkplayground

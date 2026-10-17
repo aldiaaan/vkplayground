@@ -8,32 +8,30 @@ namespace vkplayground {
 namespace error {
 
 enum class ErrorCodes : uint8_t {
-    FAILED_TO_CREATE_WINDOW,
-    FAIELED_TO_INITIALIZE_SDL,
+  FAILED_TO_CREATE_WINDOW,
+  FAIELED_TO_INITIALIZE_SDL,
 
-    FAILED_TO_CREATE_VULKAN_INSTANCE,
-    FAILED_TO_QUERY_VALIDATION_LAYERS,
+  FAILED_TO_CREATE_VULKAN_INSTANCE,
+  FAILED_TO_QUERY_VALIDATION_LAYERS,
 };
 
-[[nodiscard]] constexpr auto fail(ErrorCodes c) noexcept {
-    return std::unexpected(c);
-}
+[[nodiscard]] constexpr auto fail(ErrorCodes c) noexcept { return std::unexpected(c); }
 
 [[nodiscard]] constexpr std::string_view toString(ErrorCodes code) noexcept {
-    using enum ErrorCodes;
+  using enum ErrorCodes;
 
-    switch (code) {
-    case FAILED_TO_CREATE_WINDOW:
-        return "Failed to create Window";
-    case FAIELED_TO_INITIALIZE_SDL:
-        return "Failed to initialize SDL";
-    case FAILED_TO_CREATE_VULKAN_INSTANCE:
-        return "Failed to create Vulkan instance";
-    case FAILED_TO_QUERY_VALIDATION_LAYERS:
-        return "Failed to query validation layers";
-    };
+  switch (code) {
+  case FAILED_TO_CREATE_WINDOW:
+    return "Failed to create Window";
+  case FAIELED_TO_INITIALIZE_SDL:
+    return "Failed to initialize SDL";
+  case FAILED_TO_CREATE_VULKAN_INSTANCE:
+    return "Failed to create Vulkan instance";
+  case FAILED_TO_QUERY_VALIDATION_LAYERS:
+    return "Failed to query validation layers";
+  };
 
-    return "Unknown error code";
+  return "Unknown error code";
 }
 
 } // namespace error

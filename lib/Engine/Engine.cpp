@@ -12,37 +12,32 @@
 namespace vkplayground {
 namespace engine {
 
-Engine::Engine(EngineOptions Options)
-    : Options(Options),
-      Renderer(std::make_unique<graphics::VulkanRenderer>()) {};
+Engine::Engine(EngineOptions Options) : Options(Options), Renderer(std::make_unique<graphics::VulkanRenderer>()) {};
 
 Engine::~Engine() noexcept {};
 
 std::expected<void, error::ErrorCodes> Engine::initialize() {
 
-    auto SDLInitResult =
-        SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_JOYSTICK);
+  auto SDLInitResult = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_JOYSTICK);
 
-    if (!SDLInitResult) {
-        return error::fail(error::ErrorCodes::FAIELED_TO_INITIALIZE_SDL);
-    }
+  if (!SDLInitResult) {
+    return error::fail(error::ErrorCodes::FAIELED_TO_INITIALIZE_SDL);
+  }
 
-    auto InitializeWindowResult = WindowManager.initialize(
-        window::WindowManagerInitializeOptions{.Title = &Options.WindowTitle,
-                                               .Width = Options.WindowWidth,
-                                               .Height = Options.windowHeight});
+  auto InitializeWindowResult = WindowManager.initialize(window::WindowManagerInitializeOptions{
+      .Title = &Options.WindowTitle, .Width = Options.WindowWidth, .Height = Options.windowHeight});
 
-    if (!InitializeWindowResult) {
-        return error::fail(InitializeWindowResult.error());
-    }
+  if (!InitializeWindowResult) {
+    return error::fail(InitializeWindowResult.error());
+  }
 
-    auto InitializeRendererResult = Renderer->initialize();
+  auto InitializeRendererResult = Renderer->initialize();
 
-    if (!InitializeRendererResult) {
-        return error::fail(InitializeRendererResult.error());
-    }
+  if (!InitializeRendererResult) {
+    return error::fail(InitializeRendererResult.error());
+  }
 
-    return {};
+  return {};
 }
 
 } // namespace engine

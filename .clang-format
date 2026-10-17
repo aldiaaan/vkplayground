@@ -1,6 +1,6 @@
 BasedOnStyle: LLVM
-ColumnLimit: 80
-IndentWidth: 4
+ColumnLimit: 120
+UseTab: Never
 PointerAlignment: Left
 FixNamespaceComments: true
 IncludeBlocks: Regroup

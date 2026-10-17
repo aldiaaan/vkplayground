@@ -9,38 +9,35 @@
 namespace vkplayground {
 namespace window {
 
-std::expected<void, error::ErrorCodes>
-WindowManager::initialize(WindowManagerInitializeOptions Options) {
+std::expected<void, error::ErrorCodes> WindowManager::initialize(WindowManagerInitializeOptions Options) {
+  if (!Window) {
+    Window = SDL_CreateWindow((*Options.Title).c_str(), Options.Width, Options.Height, SDL_WINDOW_VULKAN);
     if (!Window) {
-        Window = SDL_CreateWindow((*Options.Title).c_str(), Options.Width,
-                                  Options.Height, SDL_WINDOW_VULKAN);
-        if (!Window) {
-            return std::unexpected(error::ErrorCodes::FAILED_TO_CREATE_WINDOW);
-        }
-    };
+      return std::unexpected(error::ErrorCodes::FAILED_TO_CREATE_WINDOW);
+    }
+  };
 
-    return {};
+  return {};
 }
 
 WindowManager& WindowManager::operator=(WindowManager&& Other) noexcept {
-    if (this != &Other) {
-        if (Window) {
-            SDL_DestroyWindow(Window);
-        }
-        Window = Other.Window;
-        Other.Window = nullptr;
+  if (this != &Other) {
+    if (Window) {
+      SDL_DestroyWindow(Window);
     }
-    return *this;
+    Window = Other.Window;
+    Other.Window = nullptr;
+  }
+  return *this;
 }
 
-WindowManager::WindowManager(WindowManager&& Other) noexcept
-    : Window(std::exchange(Other.Window, nullptr)) {}
+WindowManager::WindowManager(WindowManager&& Other) noexcept : Window(std::exchange(Other.Window, nullptr)) {}
 
 WindowManager::~WindowManager() noexcept {
-    if (Window) {
-        SDL_DestroyWindow(Window);
-        Window = nullptr;
-    };
+  if (Window) {
+    SDL_DestroyWindow(Window);
+    Window = nullptr;
+  };
 }
 
 } // namespace window

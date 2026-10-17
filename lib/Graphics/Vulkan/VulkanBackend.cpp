@@ -16,90 +16,79 @@
 namespace vkplayground {
 namespace graphics {
 
-VulkanBackend::VulkanBackend()
-    : ValidationLayers{"VK_LAYER_KHRONOS_validation"} {}
+VulkanBackend::VulkanBackend() : ValidationLayers{"VK_LAYER_KHRONOS_validation"} {}
 
-std::expected<std::vector<const char*>, error::ErrorCodes>
-VulkanBackend::querySupportedValidationLayers() {
-    uint32_t LayerCount;
-    auto EnumerateLayerCountResult =
-        vk::enumerateInstanceLayerProperties(&LayerCount, nullptr);
+std::expected<std::vector<const char*>, error::ErrorCodes> VulkanBackend::querySupportedValidationLayers() {
+  uint32_t LayerCount;
+  auto EnumerateLayerCountResult = vk::enumerateInstanceLayerProperties(&LayerCount, nullptr);
 
-    if (EnumerateLayerCountResult != vk::Result::eSuccess) {
-        return error::fail(
-            error::ErrorCodes::FAILED_TO_QUERY_VALIDATION_LAYERS);
+  if (EnumerateLayerCountResult != vk::Result::eSuccess) {
+    return error::fail(error::ErrorCodes::FAILED_TO_QUERY_VALIDATION_LAYERS);
+  }
+
+  std::vector<vk::LayerProperties> AvailableLayers(LayerCount);
+  auto EnumerateAvailableLayersResult = vk::enumerateInstanceLayerProperties(&LayerCount, AvailableLayers.data());
+
+  if (EnumerateAvailableLayersResult != vk::Result::eSuccess) {
+    return error::fail(error::ErrorCodes::FAILED_TO_QUERY_VALIDATION_LAYERS);
+  }
+
+  std::vector<const char*> SupportedLayers;
+
+  for (const auto& Layer : ValidationLayers) {
+    for (const auto& AvailableLayer : AvailableLayers) {
+      if (strcmp(AvailableLayer.layerName, Layer.c_str()) == 0) {
+        // SDL_Log("Found supported validation layer %s",
+        // Layer.c_str());
+        SupportedLayers.push_back(Layer.c_str());
+        break;
+      }
     }
+  }
 
-    std::vector<vk::LayerProperties> AvailableLayers(LayerCount);
-    auto EnumerateAvailableLayersResult = vk::enumerateInstanceLayerProperties(
-        &LayerCount, AvailableLayers.data());
-
-    if (EnumerateAvailableLayersResult != vk::Result::eSuccess) {
-        return error::fail(
-            error::ErrorCodes::FAILED_TO_QUERY_VALIDATION_LAYERS);
-    }
-
-    std::vector<const char*> SupportedLayers;
-
-    for (const auto& Layer : ValidationLayers) {
-        for (const auto& AvailableLayer : AvailableLayers) {
-            if (strcmp(AvailableLayer.layerName, Layer.c_str()) == 0) {
-                // SDL_Log("Found supported validation layer %s",
-                // Layer.c_str());
-                SupportedLayers.push_back(Layer.c_str());
-                break;
-            }
-        }
-    }
-
-    return SupportedLayers;
+  return SupportedLayers;
 };
 
 std::expected<void, error::ErrorCodes> VulkanBackend::createVulkanInstance() {
 
-    vk::ApplicationInfo AppInfo{};
-    AppInfo.sType = vk::StructureType::eApplicationInfo;
-    AppInfo.pApplicationName = "Vulkan Playground";
-    AppInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-    AppInfo.pEngineName = "vkplayground";
-    AppInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-    AppInfo.apiVersion = VK_API_VERSION_1_4;
+  vk::ApplicationInfo AppInfo{};
+  AppInfo.sType = vk::StructureType::eApplicationInfo;
+  AppInfo.pApplicationName = "Vulkan Playground";
+  AppInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+  AppInfo.pEngineName = "vkplayground";
+  AppInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+  AppInfo.apiVersion = VK_API_VERSION_1_4;
 
-    Uint32 CountInstanceExtensions;
+  Uint32 CountInstanceExtensions;
 
-    const char* const* InstanceExtensions =
-        SDL_Vulkan_GetInstanceExtensions(&CountInstanceExtensions);
+  const char* const* InstanceExtensions = SDL_Vulkan_GetInstanceExtensions(&CountInstanceExtensions);
 
-    vk::InstanceCreateInfo CreateInfo{};
-    CreateInfo.sType = vk::StructureType::eInstanceCreateInfo;
-    CreateInfo.pApplicationInfo = &AppInfo;
-    CreateInfo.ppEnabledExtensionNames = InstanceExtensions;
-    CreateInfo.enabledExtensionCount = CountInstanceExtensions;
+  vk::InstanceCreateInfo CreateInfo{};
+  CreateInfo.sType = vk::StructureType::eInstanceCreateInfo;
+  CreateInfo.pApplicationInfo = &AppInfo;
+  CreateInfo.ppEnabledExtensionNames = InstanceExtensions;
+  CreateInfo.enabledExtensionCount = CountInstanceExtensions;
 
-    CreateInfo.enabledLayerCount = 0;
+  CreateInfo.enabledLayerCount = 0;
 
-    auto QuerySupportedValidationLayersResult =
-        querySupportedValidationLayers();
+  auto QuerySupportedValidationLayersResult = querySupportedValidationLayers();
 
-    if (!QuerySupportedValidationLayersResult) {
-        return error::fail(QuerySupportedValidationLayersResult.error());
-    }
+  if (!QuerySupportedValidationLayersResult) {
+    return error::fail(QuerySupportedValidationLayersResult.error());
+  }
 
-    if (QuerySupportedValidationLayersResult->size() > 0) {
-        CreateInfo.enabledLayerCount =
-            QuerySupportedValidationLayersResult->size();
-        CreateInfo.ppEnabledLayerNames =
-            QuerySupportedValidationLayersResult->data();
-    }
+  if (QuerySupportedValidationLayersResult->size() > 0) {
+    CreateInfo.enabledLayerCount = QuerySupportedValidationLayersResult->size();
+    CreateInfo.ppEnabledLayerNames = QuerySupportedValidationLayersResult->data();
+  }
 
-    auto CreateInstanceResult =
-        vk::createInstance(&CreateInfo, nullptr, &VulkanInstance);
+  auto CreateInstanceResult = vk::createInstance(&CreateInfo, nullptr, &VulkanInstance);
 
-    if (CreateInstanceResult != vk::Result::eSuccess) {
-        return error::fail(error::ErrorCodes::FAILED_TO_CREATE_VULKAN_INSTANCE);
-    }
+  if (CreateInstanceResult != vk::Result::eSuccess) {
+    return error::fail(error::ErrorCodes::FAILED_TO_CREATE_VULKAN_INSTANCE);
+  }
 
-    return {};
+  return {};
 }
 } // namespace graphics
 } // namespace vkplayground

@@ -10,13 +10,13 @@ VulkanRenderer::VulkanRenderer() : Backend() {}
 VulkanRenderer::~VulkanRenderer() {}
 std::expected<void, error::ErrorCodes> VulkanRenderer::initialize() {
 
-    auto CreateVulkanInstance = Backend.createVulkanInstance();
+  auto CreateVulkanInstance = Backend.createVulkanInstance();
 
-    if (!CreateVulkanInstance) {
-        return error::fail(CreateVulkanInstance.error());
-    }
+  if (!CreateVulkanInstance) {
+    return error::fail(CreateVulkanInstance.error());
+  }
 
-    return {};
+  return {};
 };
 } // namespace graphics
 } // namespace vkplayground

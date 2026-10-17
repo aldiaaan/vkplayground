@@ -8,10 +8,10 @@
 namespace vkplayground {
 namespace graphics {
 class Renderer {
-  public:
-    virtual ~Renderer() = default;
-    virtual std::expected<void, error::ErrorCodes> initialize() = 0;
-    Renderer() = default;
+public:
+  virtual ~Renderer() = default;
+  virtual std::expected<void, error::ErrorCodes> initialize() = 0;
+  Renderer() = default;
 };
 } // namespace graphics
 } // namespace vkplayground
