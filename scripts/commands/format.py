@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Annotated
 
 import typer
 
@@ -6,10 +7,12 @@ from scripts.utils import run_command
 
 
 def run(
-    args: list[str] | None = typer.Argument(
-        None,
-        help="Files, directories, or globs to format. Defaults to scanning current directory.",
-    ),
+    args: Annotated[
+        list[str] | None,
+        typer.Argument(
+            help="Files, directories, or globs to format. Defaults to scanning current directory."
+        ),
+    ] = None,
 ):
     targets = args or ["./src", "./lib", "./include"]
     files_to_format: list[str] = []
