@@ -17,8 +17,8 @@ class WindowManager {
     ~WindowManager() noexcept;
     WindowManager(const WindowManager&) = delete;
     WindowManager& operator=(const WindowManager&) = delete;
-    WindowManager(WindowManager&& other) noexcept;
-    WindowManager& operator=(WindowManager&& other) noexcept;
+    WindowManager(WindowManager&& Other) noexcept;
+    WindowManager& operator=(WindowManager&& Other) noexcept;
 
     std::expected<void, error::ErrorCodes> initialize();
 

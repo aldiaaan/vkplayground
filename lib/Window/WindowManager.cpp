@@ -20,19 +20,19 @@ std::expected<void, error::ErrorCodes> WindowManager::initialize() {
     return {};
 }
 
-WindowManager& WindowManager::operator=(WindowManager&& other) noexcept {
-    if (this != &other) {
+WindowManager& WindowManager::operator=(WindowManager&& Other) noexcept {
+    if (this != &Other) {
         if (Window) {
             SDL_DestroyWindow(Window);
         }
-        Window = other.Window;
-        other.Window = nullptr;
+        Window = Other.Window;
+        Other.Window = nullptr;
     }
     return *this;
 }
 
-WindowManager::WindowManager(WindowManager&& other) noexcept
-    : Window(std::exchange(other.Window, nullptr)) {}
+WindowManager::WindowManager(WindowManager&& Other) noexcept
+    : Window(std::exchange(Other.Window, nullptr)) {}
 
 WindowManager::~WindowManager() noexcept {
     if (Window) {
