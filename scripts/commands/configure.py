@@ -22,7 +22,7 @@ def run(
         "-G",
         "Ninja",
         f"-DCMAKE_CXX_COMPILER={CXX_COMPILER}",
-        "-DCMAKE_CXX_FLAGS=-fsanitize=address,undefined -g",
+        "-DCMAKE_CXX_FLAGS=-O0 -g -fsanitize=address,undefined -g -fno-omit-frame-pointer",
         "-DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address,undefined",
         "-DCMAKE_SHARED_LINKER_FLAGS=-fsanitize=address,undefined",
         f"-DCMAKE_C_COMPILER={C_COMPILER}",
