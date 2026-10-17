@@ -27,19 +27,19 @@ std::expected<void, error::ErrorCodes> Engine::initialize() {
         return error::fail(error::ErrorCodes::FAIELED_TO_INITIALIZE_SDL);
     }
 
-    auto initializeWindowResult = WindowManager.initialize(
+    auto InitializeWindowResult = WindowManager.initialize(
         window::WindowManagerInitializeOptions{.Title = &Options.WindowTitle,
                                                .Width = Options.WindowWidth,
                                                .Height = Options.windowHeight});
 
-    if (!initializeWindowResult) {
-        return error::fail(initializeWindowResult.error());
+    if (!InitializeWindowResult) {
+        return error::fail(InitializeWindowResult.error());
     }
 
-    auto initializeRendererResult = Renderer->initialize();
+    auto InitializeRendererResult = Renderer->initialize();
 
-    if (!initializeRendererResult) {
-        return error::fail(initializeRendererResult.error());
+    if (!InitializeRendererResult) {
+        return error::fail(InitializeRendererResult.error());
     }
 
     return {};
