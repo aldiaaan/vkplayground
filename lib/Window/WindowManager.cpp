@@ -9,9 +9,11 @@
 namespace vkplayground {
 namespace window {
 
-std::expected<void, error::ErrorCodes> WindowManager::initialize() {
+std::expected<void, error::ErrorCodes>
+WindowManager::initialize(WindowManagerInitializeOptions Options) {
     if (!Window) {
-        Window = SDL_CreateWindow("SDL Example", 1366, 768, SDL_WINDOW_VULKAN);
+        Window = SDL_CreateWindow((*Options.Title).c_str(), Options.Width,
+                                  Options.Height, SDL_WINDOW_VULKAN);
         if (!Window) {
             return std::unexpected(error::ErrorCodes::FAILED_TO_CREATE_WINDOW);
         }
@@ -37,6 +39,7 @@ WindowManager::WindowManager(WindowManager&& Other) noexcept
 WindowManager::~WindowManager() noexcept {
     if (Window) {
         SDL_DestroyWindow(Window);
+        Window = nullptr;
     };
 }
 

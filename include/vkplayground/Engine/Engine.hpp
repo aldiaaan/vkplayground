@@ -5,16 +5,26 @@
 #include "vkplayground/Window/WindowManager.hpp"
 
 #include <expected>
+#include <string>
 
 namespace vkplayground {
 namespace engine {
 
+struct EngineOptions {
+    std::string WindowTitle = "";
+    int WindowWidth = 1366;
+    int windowHeight = 768;
+};
+
 class Engine {
   public:
-    Engine() : WindowManager() {}
+    Engine(EngineOptions Options)
+        : WindowManager(), Options(std::move(Options)) {}
     std::expected<void, error::ErrorCodes> initialize();
+    ~Engine() noexcept;
 
   private:
+    EngineOptions Options;
     window::WindowManager WindowManager;
 };
 } // namespace engine

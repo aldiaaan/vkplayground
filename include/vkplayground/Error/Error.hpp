@@ -7,7 +7,10 @@
 namespace vkplayground {
 namespace error {
 
-enum class ErrorCodes : uint8_t { FAILED_TO_CREATE_WINDOW };
+enum class ErrorCodes : uint8_t {
+    FAILED_TO_CREATE_WINDOW,
+    FAIELED_TO_INITIALIZE_SDL
+};
 
 [[nodiscard]] constexpr auto fail(ErrorCodes c) noexcept {
     return std::unexpected(c);
@@ -18,7 +21,9 @@ enum class ErrorCodes : uint8_t { FAILED_TO_CREATE_WINDOW };
 
     switch (code) {
     case FAILED_TO_CREATE_WINDOW:
-        return "(Window) Failed to create Window";
+        return "Failed to create Window";
+    case FAIELED_TO_INITIALIZE_SDL:
+        return "Failed to initialize SDL";
     };
 
     return "Unknown error code";

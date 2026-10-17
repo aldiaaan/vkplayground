@@ -4,11 +4,18 @@
 #include "vkplayground/Error/Error.hpp"
 
 #include <expected>
+#include <string>
 
 struct SDL_Window;
 
 namespace vkplayground {
 namespace window {
+
+struct WindowManagerInitializeOptions {
+    std::string* Title;
+    int Width;
+    int Height;
+};
 
 class WindowManager {
   public:
@@ -20,7 +27,8 @@ class WindowManager {
     WindowManager(WindowManager&& Other) noexcept;
     WindowManager& operator=(WindowManager&& Other) noexcept;
 
-    std::expected<void, error::ErrorCodes> initialize();
+    std::expected<void, error::ErrorCodes>
+    initialize(WindowManagerInitializeOptions Options);
 
   private:
     SDL_Window* Window = nullptr;

@@ -5,6 +5,7 @@ add_executable(application
 target_link_libraries(application
     PRIVATE
         vkplayground
+        SDL3::SDL3
 )
 
 if(VK_PLAYGROUND_PLATFORM MATCHES "WIN32")
