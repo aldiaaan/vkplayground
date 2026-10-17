@@ -5,3 +5,5 @@ target_sources(vkplayground
         ${INCLUDE_ROOT}/Renderer.hpp
         Renderer.cpp
 )
+
+add_subdirectory(Vulkan)

@@ -9,7 +9,9 @@ namespace error {
 
 enum class ErrorCodes : uint8_t {
     FAILED_TO_CREATE_WINDOW,
-    FAIELED_TO_INITIALIZE_SDL
+    FAIELED_TO_INITIALIZE_SDL,
+
+    FAILED_TO_CREATE_VULKAN_INSTANCE
 };
 
 [[nodiscard]] constexpr auto fail(ErrorCodes c) noexcept {
@@ -24,6 +26,8 @@ enum class ErrorCodes : uint8_t {
         return "Failed to create Window";
     case FAIELED_TO_INITIALIZE_SDL:
         return "Failed to initialize SDL";
+    case FAILED_TO_CREATE_VULKAN_INSTANCE:
+        return "Failed to create Vulkan instance";
     };
 
     return "Unknown error code";
