@@ -8,6 +8,9 @@ Prerequisites:
 - uv (https://docs.astral.sh/uv/)
 - CMake 3.21+ (https://cmake.org/)
 
+Hardware Requirements:
+- Vulkan 1.4 compatible device
+
 ## How to run:
 - `just cli configure`
 - `just cli run`
