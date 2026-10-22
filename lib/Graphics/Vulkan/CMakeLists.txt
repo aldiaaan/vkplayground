@@ -9,4 +9,5 @@ target_sources(vkplayground
 )
 
 find_package(Vulkan REQUIRED)
+target_compile_definitions(vkplayground PRIVATE VULKAN_HPP_NO_EXCEPTIONS)
 target_link_libraries(vkplayground PRIVATE Vulkan::Vulkan)

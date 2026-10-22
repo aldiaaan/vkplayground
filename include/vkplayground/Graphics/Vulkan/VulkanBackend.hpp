@@ -9,9 +9,13 @@
 namespace vkplayground {
 namespace graphics {
 
+struct VulkanBackendConfig {
+  bool EnableValidation = true;
+};
+
 class VulkanBackend {
 public:
-  VulkanBackend();
+  explicit VulkanBackend(const VulkanBackendConfig& config = {});
 
   ~VulkanBackend() = default;
 
@@ -26,11 +30,17 @@ public:
   }
 
   std::expected<void, error::ErrorCodes> createVulkanInstance();
-  std::expected<std::vector<const char*>, error::ErrorCodes> querySupportedValidationLayers();
 
 private:
+  std::expected<std::vector<const char*>, error::ErrorCodes> getRequiredLayers();
+  std::expected<std::vector<const char*>, error::ErrorCodes> getRequiredExtensions();
+  std::expected<bool, error::ErrorCodes> isInstanceExtensionSupported(std::string_view Name);
+  std::expected<bool, error::ErrorCodes> isLayerSupported(std::string_view Name);
+
   vk::Instance VulkanInstance = nullptr;
-  std::vector<std::string> ValidationLayers;
+  bool EnableValidation = false;
+  // std::vector<std::string> Layers;
+  // std::vector<std::string> Extensions;
 };
 } // namespace graphics
 } // namespace vkplayground
